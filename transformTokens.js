@@ -1,7 +1,19 @@
 const StyleDictionary = require('style-dictionary')
 const deepMerge = require("deepmerge");
 // const webConfig = require('./src/web/index.js')
-const androidConfig = require("./src/android/index.js");
+// const androidConfig = require("./src/android/index.js");
+
+const androidConfig = {
+  transformGroup: "android",
+  buildPath: "build/android/",
+  files: [
+    {
+      destination: "styles.xml",
+      format: "android/resources",
+      filter: "validToken",
+    },
+  ],
+};
 
 StyleDictionary.registerTransform({
   name: 'size/px',
@@ -52,7 +64,7 @@ StyleDictionary.registerFilter({
     ].includes(token.type);
   }
 })
-
+console.log('Merged Configuration:', deepMerge.all([androidConfig]));
 const StyleDictionaryExtended = StyleDictionary.extend({
   ...deepMerge.all([androidConfig]),
   source: ["tokens/*.json"],
@@ -140,3 +152,4 @@ console.log('StyleDictionaryExtended', StyleDictionaryExtended)
 
 
 StyleDictionaryExtended.buildAllPlatforms()
+console.log('Available Platforms:', StyleDictionary.getPlatform('android'));
