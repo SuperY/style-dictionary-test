@@ -1,7 +1,7 @@
 const StyleDictionary = require('style-dictionary')
 const deepMerge = require("deepmerge");
 // const webConfig = require('./src/web/index.js')
-// const androidConfig = require("./src/android/index.js");
+const androidConfig = require("./src/android/index.js");
 
 // StyleDictionary.registerTransform({
 //   name: 'size/px',
@@ -38,7 +38,7 @@ StyleDictionary.registerFilter({
 })
 
 const StyleDictionaryExtended = StyleDictionary.extend({
-  ...deepMerge.all([]),
+  ...deepMerge.all([androidConfig]),
   source: ["tokens/*.json"],
   platforms: {
     "json-flat": {
@@ -122,5 +122,15 @@ const StyleDictionaryExtended = StyleDictionary.extend({
 });
 console.log('StyleDictionaryExtended', StyleDictionaryExtended)
 
-
+StyleDictionary.registerFormat({
+  name: 'android/colors',
+  formatter: function (dictionary) {
+    return `<resources>\n` +
+      dictionary.allProperties
+        .filter(prop => prop.type === 'color')
+        .map(prop => `  <color name="${prop.name}">${prop.value}</color>`)
+        .join('\n') +
+      `\n</resources>`;
+  }
+});
 StyleDictionaryExtended.buildAllPlatforms()
