@@ -64,7 +64,7 @@ StyleDictionary.registerFilter({
     ].includes(token.type);
   }
 })
-console.log('Merged Configuration:', deepMerge.all([androidConfig]));
+
 const StyleDictionaryExtended = StyleDictionary.extend({
   ...deepMerge.all([androidConfig]),
   source: ["tokens/*.json"],
