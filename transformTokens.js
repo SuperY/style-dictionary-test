@@ -1,7 +1,7 @@
 const StyleDictionary = require('style-dictionary')
 const deepMerge = require("deepmerge");
 // const webConfig = require('./src/web/index.js')
-const androidConfig = require("./src/android/index.js");
+// const androidConfig = require("./src/android/index.js");
 
 StyleDictionary.registerTransform({
   name: 'size/px',
@@ -43,7 +43,7 @@ StyleDictionary.registerFilter({
 })
 
 const StyleDictionaryExtended = StyleDictionary.extend({
-  ...deepMerge.all([androidConfig]),
+  ...deepMerge.all([]),
   source: ["tokens/*.json"],
   platforms: {
     scss: {
