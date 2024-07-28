@@ -41,20 +41,6 @@ const StyleDictionaryExtended = StyleDictionary.extend({
   ...deepMerge.all([]),
   source: ["tokens/*.json"],
   platforms: {
-    css: {
-      transformGroup: "custom/css",
-      buildPath: "build/css/",
-      files: [
-        {
-          destination: "_variables.css",
-          format: "css/variables",
-          filter: "validToken",
-          options: {
-            showFileHeader: false,
-          },
-        },
-      ],
-    },
     "json-flat": {
       transformGroup: "js",
       buildPath: "build/json/",
