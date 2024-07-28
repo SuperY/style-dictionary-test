@@ -122,15 +122,5 @@ const StyleDictionaryExtended = StyleDictionary.extend({
 });
 console.log('StyleDictionaryExtended', StyleDictionaryExtended)
 
-StyleDictionary.registerFormat({
-  name: 'android/colors',
-  formatter: function (dictionary) {
-    return `<resources>\n` +
-      dictionary.allProperties
-        .filter(prop => prop.type === 'color')
-        .map(prop => `  <color name="${prop.name}">${prop.value}</color>`)
-        .join('\n') +
-      `\n</resources>`;
-  }
-});
+
 StyleDictionaryExtended.buildAllPlatforms()
