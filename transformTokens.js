@@ -1,19 +1,8 @@
 const StyleDictionary = require('style-dictionary')
 const deepMerge = require("deepmerge");
+const android = require('./src/android');
 // const webConfig = require('./src/web/index.js')
 // const androidConfig = require("./src/android/index.js");
-
-const androidConfig = {
-  transformGroup: "android",
-  buildPath: "build/android/",
-  files: [
-    {
-      destination: "styles.xml",
-      format: "android/resources",
-      filter: "validToken",
-    },
-  ],
-};
 
 StyleDictionary.registerTransform({
   name: 'size/px',
@@ -46,12 +35,7 @@ StyleDictionary.registerTransform({
   transformer: function (token) {
     return token.value;
   }
-})
-
-StyleDictionary.registerTransformGroup({
-  name: 'js',
-  transforms: ['color/hex8', 'size/px', 'size/percent'] // 根据需要添加变换
-})
+});
 
 StyleDictionary.registerFilter({
   name: 'validToken',
@@ -71,11 +55,21 @@ StyleDictionary.registerFilter({
 })
 
 const StyleDictionaryExtended = StyleDictionary.extend({
-  ...deepMerge.all([androidConfig]),
+  // ...deepMerge.all([]),
   source: ["tokens/*.json"],
-  platforms:
-   {
-    js: {
+  platforms: {
+    android: {
+      transformGroup: "android",
+      buildPath: "build/android/",
+      files: [
+        {
+          destination: "styles.xml",
+          format: "android/resources",
+          filter: "validToken",
+        },
+      ],
+    },
+    "json-flat": {
       transformGroup: "js",
       buildPath: "build/json/",
       files: [
@@ -155,5 +149,6 @@ const StyleDictionaryExtended = StyleDictionary.extend({
   },
 });
 console.log('StyleDictionaryExtended', StyleDictionaryExtended)
+
 
 StyleDictionaryExtended.buildAllPlatforms()
