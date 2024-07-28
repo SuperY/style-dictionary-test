@@ -46,7 +46,12 @@ StyleDictionary.registerTransform({
   transformer: function (token) {
     return token.value;
   }
-});
+})
+
+StyleDictionary.registerTransformGroup({
+  name: 'js',
+  transforms: ['color/hex8', 'size/px', 'size/percent'] // 根据需要添加变换
+})
 
 StyleDictionary.registerFilter({
   name: 'validToken',
@@ -68,8 +73,9 @@ StyleDictionary.registerFilter({
 const StyleDictionaryExtended = StyleDictionary.extend({
   ...deepMerge.all([androidConfig]),
   source: ["tokens/*.json"],
-  platforms: {
-    "json-flat": {
+  platforms:
+   {
+    js: {
       transformGroup: "js",
       buildPath: "build/json/",
       files: [
@@ -150,6 +156,4 @@ const StyleDictionaryExtended = StyleDictionary.extend({
 });
 console.log('StyleDictionaryExtended', StyleDictionaryExtended)
 
-
 StyleDictionaryExtended.buildAllPlatforms()
-console.log('Available Platforms:', StyleDictionary.getPlatform('android'));
